@@ -36,8 +36,6 @@ function displayMessages(){
 }
 
 ulToDo.addEventListener('change', function(event){
-    let idInput  = event.target.getAttribute('id');
-    let forLabel = ulToDo.querySelector('[for = '+ idInput +']');
-    let valueLabel = forLabel.innerHTML;
+    let valueLabel = ulToDo.querySelector('[for = '+ event.target.getAttribute('id') +']').innerHTML;
     console.log(valueLabel);
 });
