@@ -9,18 +9,18 @@ let taskInput   = document.querySelector('.task-input'),
     }
 
 taskBtn.addEventListener('click', function(){
-
+    if(!taskInput.value) return;
     let newToDo = {
         todo: taskInput.value,
         checked: false
     }
-    if(taskInput.value != ''){
+    
         toDoList.push(newToDo);
 
         displayMessages();
         localStorage.setItem('todo', JSON.stringify(toDoList));
         taskInput.value = '';
-    }
+    
 });
 
 function displayMessages(){
