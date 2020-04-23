@@ -1,8 +1,12 @@
 let taskInput   = document.querySelector('.task-input'),
     taskBtn     = document.querySelector('.task-btn'),
-    liToDo        = document.querySelector('.todo');
+    ulToDo        = document.querySelector('.todo');
 
-        let toDoList = [];
+    let toDoList = [];
+    if(localStorage.getItem('todo')){
+        toDoList = JSON.parse(localStorage.getItem('todo'));
+        displayMessages();
+    }
 
 taskBtn.addEventListener('click', function(){
 
@@ -15,6 +19,7 @@ taskBtn.addEventListener('click', function(){
     toDoList.push(newToDo);
 
     displayMessages();
+    localStorage.setItem('todo', JSON.stringify(toDoList));
 });
 
 function displayMessages(){
@@ -22,11 +27,17 @@ function displayMessages(){
     toDoList.forEach(function(item, i){
         displayMessage += `
             <li>
-                <input type="checkbox" id="item_${i}">
+                <input type="checkbox" id="item_${i}" ${item.checked ? 'checked': ''}>
                 <label for="item_${i}"> ${item.todo} </label>
             </li>
         `;
-        liToDo.innerHTML = displayMessage;
+        ulToDo.innerHTML = displayMessage;
     });
-
 }
+
+ulToDo.addEventListener('change', function(event){
+    let idInput  = event.target.getAttribute('id');
+    let forLabel = ulToDo.querySelector('[for = '+ idInput +']');
+    let valueLabel = forLabel.innerHTML;
+    console.log(valueLabel);
+});
