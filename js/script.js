@@ -18,9 +18,9 @@ taskBtn.addEventListener('click', function(){
 });
 
 function displayMessages(){
-
+    let displayMessage = ' ';
     toDoList.forEach(function(item, i){
-        let displayMessage = `
+        displayMessage += `
             <li>
                 <input type="checkbox" id="item_${i}">
                 <label for="item_${i}"> ${item.todo} </label>
