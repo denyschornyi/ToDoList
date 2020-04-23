@@ -12,14 +12,15 @@ taskBtn.addEventListener('click', function(){
 
     let newToDo = {
         todo: taskInput.value,
-        checked: false,
-        important: false
+        checked: false
     }
+    if(taskInput.value != ''){
+        toDoList.push(newToDo);
 
-    toDoList.push(newToDo);
-
-    displayMessages();
-    localStorage.setItem('todo', JSON.stringify(toDoList));
+        displayMessages();
+        localStorage.setItem('todo', JSON.stringify(toDoList));
+        taskInput.value = '';
+    }
 });
 
 function displayMessages(){
@@ -36,9 +37,7 @@ function displayMessages(){
 }
 
 ulToDo.addEventListener('change', function(event){
-    let idInput  = event.target.getAttribute('id');
-    let forLabel = ulToDo.querySelector('[for = '+ idInput +']');
-    let valueLabel = forLabel.innerHTML;
+    let valueLabel = ulToDo.querySelector('[for = '+ event.target.getAttribute('id') +']').innerHTML;
 
     toDoList.forEach(function(item){
         if(item.todo === valueLabel){

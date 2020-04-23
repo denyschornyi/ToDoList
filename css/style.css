@@ -8,10 +8,6 @@ body {
     margin: 0 auto;
     padding-top: 50px; }
   
-  .important {
-    font-weight: bold;
-    color: #A40E11; }
-  
   .todo_list {
     max-width: 400px;
     display: block;
