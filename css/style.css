@@ -31,6 +31,7 @@ body{
   .li_todo span{
      display: none;
      cursor: pointer;
+     font-size: 12px;
     }
   .li_todo:hover span{display: block;}
   

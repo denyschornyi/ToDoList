@@ -1,6 +1,6 @@
 let taskInput   = document.querySelector('.task-input'),
     taskBtn     = document.querySelector('.task-btn'),
-    ulToDo        = document.querySelector('.todo');
+    ulToDo      = document.querySelector('.todo');
 
     let toDoList = [];
 
@@ -16,13 +16,35 @@ taskInput.addEventListener('keydown',(event)=>{
     }
 });
 
+ulToDo.addEventListener('change', function(event){
+    let valueLabel = ulToDo.querySelector('[for = '+ event.target.getAttribute('id') +']').innerHTML;
+    toDoList.forEach(function(item){
+        if(item.todo === valueLabel){
+            item.checked = !item.checked;
+            localStorage.setItem('todo', JSON.stringify(toDoList));
+        }
+    });
+});
+
+
+ulToDo.addEventListener('contextmenu', function(event){
+    event.preventDefault();
+    toDoList.forEach(function(item, i){
+        if(item.todo === event.target.innerHTML){
+            toDoList.splice(i, 1);
+            displayMessages();
+            localStorage.setItem('todo', JSON.stringify(toDoList));
+
+        }
+    });
+});
+
 function action(){
     if(!taskInput.value) return;
     let newToDo = {
         todo: taskInput.value,
         checked: false
     }
-    
         toDoList.push(newToDo);
 
         displayMessages();
@@ -40,21 +62,9 @@ function displayMessages(){
                     <input type="checkbox" id="item_${i}" ${item.checked ? 'checked': ''}>
                     <label class="label-todo" for="item_${i}">${item.todo}</label>
                 </div>
-                <span>&#10005;</span>
+                <span class="clear-todo">&#10005;</span>
             </li>
         `;
         ulToDo.innerHTML = displayMessage;
     });
 }
-
-ulToDo.addEventListener('change', function(event){
-    let valueLabel = ulToDo.querySelector('[for = '+ event.target.getAttribute('id') +']').innerHTML;
-
-    toDoList.forEach(function(item){
-        if(item.todo === valueLabel){
-            item.checked = !item.checked;
-            localStorage.setItem('todo', JSON.stringify(toDoList));
-        }
-    });
-
-});
