@@ -3,12 +3,23 @@ let taskInput   = document.querySelector('.task-input'),
     ulToDo        = document.querySelector('.todo');
 
     let toDoList = [];
+
     if(localStorage.getItem('todo')){
         toDoList = JSON.parse(localStorage.getItem('todo'));
         displayMessages();
     }
 
 taskBtn.addEventListener('click', function(){
+action();
+});
+
+taskInput.addEventListener('keydown',(event)=>{
+    if(event.keyCode == 13){
+        action();
+    }
+});
+
+function action(){
     if(!taskInput.value) return;
     let newToDo = {
         todo: taskInput.value,
@@ -21,7 +32,7 @@ taskBtn.addEventListener('click', function(){
         localStorage.setItem('todo', JSON.stringify(toDoList));
         taskInput.value = '';
     
-});
+}
 
 function displayMessages(){
     let displayMessage = '';
