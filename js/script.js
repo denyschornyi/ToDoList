@@ -2,6 +2,7 @@ let taskInput   = document.querySelector('.task-input'),
     taskBtn     = document.querySelector('.task-btn'),
     ulToDo      = document.querySelector('.todo');
 
+
     let toDoList = [];
 
     if(localStorage.getItem('todo')){
@@ -12,7 +13,16 @@ let taskInput   = document.querySelector('.task-input'),
 
 taskInput.addEventListener('keydown',(event)=>{
     if(event.keyCode == 13){
-        action();
+        if(!taskInput.value) return;
+        let newToDo = {
+            todo: taskInput.value,
+            checked: false
+        }
+            toDoList.push(newToDo);
+    
+            displayMessages();
+            localStorage.setItem('todo', JSON.stringify(toDoList));
+            taskInput.value = '';
     }
 });
 
@@ -27,6 +37,7 @@ ulToDo.addEventListener('change', function(event){
 });
 
 
+
 ulToDo.addEventListener('contextmenu', function(event){
     event.preventDefault();
     toDoList.forEach(function(item, i){
@@ -39,22 +50,17 @@ ulToDo.addEventListener('contextmenu', function(event){
     });
 });
 
-function action(){
-    if(!taskInput.value) return;
-    let newToDo = {
-        todo: taskInput.value,
-        checked: false
-    }
-        toDoList.push(newToDo);
-
-        displayMessages();
-        localStorage.setItem('todo', JSON.stringify(toDoList));
-        taskInput.value = '';
-    
+function cleary(){
+    toDoList.splice(this, 1);
+    displayMessages();
+    localStorage.setItem('todo', JSON.stringify(toDoList));
 }
+
+
 
 function displayMessages(){
     let displayMessage = '';
+    if(toDoList.length === 0) ulToDo.innerHTML = '';
     toDoList.forEach(function(item, i){
         displayMessage += `
             <li class="li_todo">
@@ -62,9 +68,13 @@ function displayMessages(){
                     <input type="checkbox" id="item_${i}" ${item.checked ? 'checked': ''}>
                     <label class="label-todo" for="item_${i}">${item.todo}</label>
                 </div>
-                <span class="clear-todo">&#10005;</span>
+                <span class="clear-todo" >&#10005;</span>
             </li>
         `;
         ulToDo.innerHTML = displayMessage;
     });
 }
+
+let clearToDo   = document.querySelector('clear-todo');
+
+clearToDo.addEventListener('click', () => this.cleary());
