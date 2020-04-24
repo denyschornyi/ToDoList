@@ -9,9 +9,6 @@ let taskInput   = document.querySelector('.task-input'),
         displayMessages();
     }
 
-taskBtn.addEventListener('click', function(){
-action();
-});
 
 taskInput.addEventListener('keydown',(event)=>{
     if(event.keyCode == 13){
@@ -38,9 +35,12 @@ function displayMessages(){
     let displayMessage = '';
     toDoList.forEach(function(item, i){
         displayMessage += `
-            <li>
-                <input type="checkbox" id="item_${i}" ${item.checked ? 'checked': ''}>
-                <label for="item_${i}">${item.todo}</label>
+            <li class="li_todo">
+                <div>
+                    <input type="checkbox" id="item_${i}" ${item.checked ? 'checked': ''}>
+                    <label class="label-todo" for="item_${i}">${item.todo}</label>
+                </div>
+                <span>&#10005;</span>
             </li>
         `;
         ulToDo.innerHTML = displayMessage;
