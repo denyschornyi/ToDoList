@@ -5,6 +5,7 @@ let todoInput = document.querySelector('.todo-input'),
 let todoArray = [];
 //Event Listener
 todoInput.addEventListener('keyup', addTodo);
+todoList.addEventListener('click', removeItem);
 
 //Functions
 
@@ -13,7 +14,7 @@ function addTodo(event){
        
         let newTodo = {
             item: todoInput.value,
-            checked: false
+            checked: false,
         }
 
         //CREATE ELEMENT TODO
@@ -22,6 +23,7 @@ function addTodo(event){
         taskLi.classList.add('task-li');
         //CREATE CHECKBOX
         const taskCheckbox = document.createElement('INPUT');
+        taskCheckbox.classList.add('check');
         taskCheckbox.type = 'checkbox';
         taskLi.appendChild(taskCheckbox);
         //CREATE INPUT TASK LABEL
@@ -43,4 +45,12 @@ function addTodo(event){
         todoInput.value = '';
         console.log(todoArray);
    }
+}
+
+function removeItem(event){
+    let item = event.target;
+    if(item.classList.contains('delete-btn')){
+        console.log(item.parentElement);
+        item.parentElement.remove();
+    }
 }

@@ -55,7 +55,17 @@ body{
      line-height: 1.4;
      border: none;
      background-color: transparent;
-     
+   }
+   .check-btn{
+     text-decoration: line-through;
+     opacity: 0.5;
+   }
+   .delete-btn{
+     padding: 5px;
+     font-size: 20px;
+     cursor: pointer;
+     border: none;
+     background: transparent;
    }
   
   
