@@ -1,80 +1,33 @@
-let taskInput   = document.querySelector('.task-input'),
-    taskBtn     = document.querySelector('.task-btn'),
-    ulToDo      = document.querySelector('.todo');
+let taskInput = document.querySelector('.task-input'),
+    ulToDo    = document.querySelector('.todo');
 
+let toDoList = [];
 
-    let toDoList = [];
-
-    if(localStorage.getItem('todo')){
-        toDoList = JSON.parse(localStorage.getItem('todo'));
-        displayMessages();
-    }
-
-
-taskInput.addEventListener('keydown',(event)=>{
-    if(event.keyCode == 13){
-        if(!taskInput.value) return;
+taskInput.addEventListener('keyup', (event)=>{
+    if(!taskInput.value) return;
+    if(event.keyCode === 13){
         let newToDo = {
-            todo: taskInput.value,
+            item: taskInput.value,
             checked: false
         }
-            toDoList.push(newToDo);
-    
-            displayMessages();
-            localStorage.setItem('todo', JSON.stringify(toDoList));
-            taskInput.value = '';
+        toDoList.push(newToDo);
+        displayMessages();
+        taskInput.value = '';
     }
 });
-
-ulToDo.addEventListener('change', function(event){
-    let valueLabel = ulToDo.querySelector('[for = '+ event.target.getAttribute('id') +']').innerHTML;
-    toDoList.forEach(function(item){
-        if(item.todo === valueLabel){
-            item.checked = !item.checked;
-            localStorage.setItem('todo', JSON.stringify(toDoList));
-        }
-    });
-});
-
-
-
-ulToDo.addEventListener('contextmenu', function(event){
-    event.preventDefault();
-    toDoList.forEach(function(item, i){
-        if(item.todo === event.target.innerHTML){
-            toDoList.splice(i, 1);
-            displayMessages();
-            localStorage.setItem('todo', JSON.stringify(toDoList));
-
-        }
-    });
-});
-
-function cleary(){
-    toDoList.splice(this, 1);
-    displayMessages();
-    localStorage.setItem('todo', JSON.stringify(toDoList));
-}
-
-
 
 function displayMessages(){
     let displayMessage = '';
-    if(toDoList.length === 0) ulToDo.innerHTML = '';
     toDoList.forEach(function(item, i){
         displayMessage += `
-            <li class="li_todo">
-                <div>
-                    <input type="checkbox" id="item_${i}" ${item.checked ? 'checked': ''}>
-                    <label class="label-todo" for="item_${i}">${item.todo}</label>
-                </div>
-                <span class="clear-todo" >&#10005;</span>
+            <li>
+                <input type='checkbox' id='item-${i}'>
+                <label for='item-${i}'> ${item.item}</label>
+                <button class='clear' >&#10005;</button>
             </li>
         `;
         ulToDo.innerHTML = displayMessage;
     });
 }
 
-let clearToDo   = document.querySelector('clear-todo');
 
-clearToDo.addEventListener('click', () => this.cleary());
