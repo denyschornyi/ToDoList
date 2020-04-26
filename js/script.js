@@ -10,6 +10,7 @@ if(localStorage.getItem('todo')){
 //Event Listener
 todoInput.addEventListener('keyup', check);
 todoList.addEventListener('click', removeItem);
+todoList.addEventListener('change', check);
 
 //Functions
 function check(event){
@@ -23,7 +24,6 @@ function check(event){
         localStorage.setItem('todo', JSON.stringify(todoArray));
         addTodo();
         todoInput.value = '';
-        console.log(todoArray);
     }
 }
 
@@ -33,7 +33,7 @@ function addTodo(){
     todoArray.forEach(function(item, i){
     displayMessage += `
         <li class="task-li">
-            <input type="checkbox" class="check" id="item-${i}" >
+            <input type="checkbox" class="check" id="item-${i}" ${item.checked ? 'checked': ''} >
             <label for="item-${i}" class="task-label">${item.item}</label>
             <button class="delete-btn">&times;</button>
         </li>`;
@@ -44,13 +44,11 @@ function addTodo(){
 function removeItem(event){
     if(event.target.classList.contains('delete-btn')){
         let elemes = event.target.parentElement.children;
-        console.log(elemes);
         [].forEach.call(elemes, function(item){
             if(item.classList.contains('task-label')){
                 todoArray.forEach(function(todos, i){
                     if(item.innerHTML === todos.item){
                         todoArray.splice(this, 1);
-                        console.log(todoArray);
                         addTodo();
                         localStorage.setItem('todo', JSON.stringify(todoArray));
                     }
@@ -59,4 +57,16 @@ function removeItem(event){
         });
     }
 }
+
+function check(event){
+    let valueLabel = todoList.querySelector('[for = '+ event.target.getAttribute('id') +']').innerHTML;
+    todoArray.forEach(function(item){
+        if(item.item === valueLabel){
+            item.checked = !item.checked;
+            localStorage.setItem('todo', JSON.stringify(todoArray));
+        }
+    });
+}
+
+
 
