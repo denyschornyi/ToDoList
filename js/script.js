@@ -11,23 +11,25 @@ todoList.addEventListener('click', removeItem);
 
 function addTodo(event){
     if(event.keyCode === 13){   
-       
         let newTodo = {
             item: todoInput.value,
             checked: false,
         }
+        todoArray.push(newTodo);
 
-        const taskLii = `
+        let displayMessage = '';
+        todoArray.forEach(function(item, i){
+            displayMessage += `
             <li class="task-li">
-                <input type="checkbox" class="check" id="item-" >
-                <label for="item-" class="task-label">${newTodo.item}</label>
+                <input type="checkbox" class="check" id="item-${i}" >
+                <label for="item-${i}" class="task-label">${item.item}</label>
                 <button class="delete-btn">&times;</button>
             </li>
         `;
-
+        });
         //APPEND ELEMENT TO DOM ELEMENT TODO LIST
-        todoList.innerHTML = taskLii;
-        todoArray.push(newTodo);
+        todoList.innerHTML = displayMessage;
+        
         todoInput.value = '';
         console.log(todoArray);
    }
