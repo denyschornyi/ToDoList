@@ -3,6 +3,10 @@ let todoInput = document.querySelector('.todo-input'),
     todoList   = document.querySelector('.todo-list');
 
 let todoArray = [];
+if(localStorage.getItem('todo')){
+    todoArray = JSON.parse(localStorage.getItem('todo'));
+    addTodo();
+}
 //Event Listener
 todoInput.addEventListener('keyup', check);
 todoList.addEventListener('click', removeItem);
@@ -16,14 +20,16 @@ function check(event){
             checked: false,
         }
         todoArray.push(newTodo);
+        localStorage.setItem('todo', JSON.stringify(todoArray));
         addTodo();
         todoInput.value = '';
         console.log(todoArray);
     }
 }
 
-function addTodo(event){
+function addTodo(){
     let displayMessage = '';
+    if(todoArray.length === 0) todoList.innerHTML = '';
     todoArray.forEach(function(item, i){
     displayMessage += `
         <li class="task-li">
@@ -36,9 +42,21 @@ function addTodo(event){
 }
 
 function removeItem(event){
-    let item = event.target;
-    if(item.classList.contains('delete-btn')){
-        console.log(item.parentElement);
-        item.parentElement.remove();
+    if(event.target.classList.contains('delete-btn')){
+        let elemes = event.target.parentElement.children;
+        console.log(elemes);
+        [].forEach.call(elemes, function(item){
+            if(item.classList.contains('task-label')){
+                todoArray.forEach(function(todos, i){
+                    if(item.innerHTML === todos.item){
+                        todoArray.splice(this, 1);
+                        console.log(todoArray);
+                        addTodo();
+                        localStorage.setItem('todo', JSON.stringify(todoArray));
+                    }
+                });
+            }
+        });
     }
 }
+
