@@ -17,30 +17,16 @@ function addTodo(event){
             checked: false,
         }
 
-        //CREATE ELEMENT TODO
-        //CREATE ELEMENT LI  WRAPPER
-        const taskLi = document.createElement('LI');
-        taskLi.classList.add('task-li');
-        //CREATE CHECKBOX
-        const taskCheckbox = document.createElement('INPUT');
-        taskCheckbox.classList.add('check');
-        taskCheckbox.type = 'checkbox';
-        taskLi.appendChild(taskCheckbox);
-        //CREATE INPUT TASK LABEL
-        const taskLabel = document.createElement('input');
-        taskLabel.type = 'text';
-        taskLabel.classList.add('task-label');
-        taskLabel.value = newTodo.item;
-        taskLabel.setAttribute("disabled", "disabled");
-        taskLi.appendChild(taskLabel);
-        //CREATE DELETE BUTTON
-        const deleteBtn = document.createElement('BUTTON');
-        deleteBtn.classList.add('delete-btn');
-        deleteBtn.innerHTML = '&times;';
-        taskLi.appendChild(deleteBtn);
+        const taskLii = `
+            <li class="task-li">
+                <input type="checkbox" class="check" id="item-" >
+                <label for="item-" class="task-label">${newTodo.item}</label>
+                <button class="delete-btn">&times;</button>
+            </li>
+        `;
 
         //APPEND ELEMENT TO DOM ELEMENT TODO LIST
-        todoList.appendChild(taskLi);
+        todoList.innerHTML = taskLii;
         todoArray.push(newTodo);
         todoInput.value = '';
         console.log(todoArray);
@@ -49,6 +35,7 @@ function addTodo(event){
 
 function removeItem(event){
     let item = event.target;
+
     if(item.classList.contains('delete-btn')){
         console.log(item.parentElement);
         item.parentElement.remove();
