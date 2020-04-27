@@ -10,7 +10,7 @@ if(localStorage.getItem('todo')){
 //Event Listener
 todoInput.addEventListener('keyup', check);
 todoList.addEventListener('click', removeItem);
-todoList.addEventListener('change', check);
+todoList.addEventListener('change', checker);
 
 //Functions
 function check(event){
@@ -58,7 +58,7 @@ function removeItem(event){
     }
 }
 
-function check(event){
+function checker(event){
     let valueLabel = todoList.querySelector('[for = '+ event.target.getAttribute('id') +']').innerHTML;
     todoArray.forEach(function(item){
         if(item.item === valueLabel){
