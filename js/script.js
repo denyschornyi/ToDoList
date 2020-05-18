@@ -42,10 +42,10 @@ function addTodo(){
 }
 
 function removeItem(event){
-    if(event.target.classList.contains('delete-btn')){
-        let elemes = event.target.parentElement.children;
-        [].forEach.call(elemes, function(item){
-            if(item.classList.contains('task-label')){
+    if(event.target.className === 'delete-btn'){
+        let elemes = event.target.parentNode.childNodes;
+        elemes.forEach(item => {
+            if(item.className === 'task-label'){
                 todoArray.forEach(function(todos, i){
                     if(item.innerHTML === todos.item){
                         todoArray.splice(this, 1);
